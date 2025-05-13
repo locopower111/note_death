@@ -1,0 +1,33 @@
+﻿version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+      - db
+
+  celery:
+    build: ./backend
+    command: celery -A src.celery_app worker --loglevel=info
+    depends_on:
+      - backend
+      - rabbitmq
+
+volumes:
+  postgres_data:

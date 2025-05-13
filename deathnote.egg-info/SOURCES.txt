@@ -1,0 +1,5 @@
+setup.py
+deathnote.egg-info/PKG-INFO
+deathnote.egg-info/SOURCES.txt
+deathnote.egg-info/dependency_links.txt
+deathnote.egg-info/top_level.txt
